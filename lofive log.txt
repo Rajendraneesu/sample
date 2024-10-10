@@ -1,0 +1,76 @@
+argus@argus-Inspiron-15-3567:~$ virtualenv venv 
+created virtual environment CPython3.6.9.final.0-64 in 2402ms
+  creator CPython3Posix(dest=/home/argus/venv, clear=False, no_vcs_ignore=False, global=False)
+  seeder FromAppData(download=False, pip=bundle, setuptools=bundle, wheel=bundle, via=copy, app_data_dir=/home/argus/.local/share/virtualenv)
+    added seed packages: pip==21.3.1, setuptools==59.6.0, wheel==0.37.1
+  activators BashActivator,CShellActivator,FishActivator,NushellActivator,PowerShellActivator,PythonActivator
+argus@argus-Inspiron-15-3567:~$ source venv/bin/activate
+(venv) argus@argus-Inspiron-15-3567:~$ cd freedom-e-sdk/
+(venv) argus@argus-Inspiron-15-3567:~/freedom-e-sdk$ ls
+bsp       freedom-devicetree-tools  LICENSE          Makefile           README.md            riscv-openocd  wit-manifest.json
+debug.mk  freedom-metal             LICENSE.Apache2  qemu-4.1.0         release.mk           scripts
+doc       jimtcl                    LICENSE.MIT      qemu-4.1.0.tar.xz  riscv-gnu-toolchain  software
+(venv) argus@argus-Inspiron-15-3567:~/freedom-e-sdk$ cd software/
+(venv) argus@argus-Inspiron-15-3567:~/freedom-e-sdk/software$ ls
+cflush                            csr           example-rtc           hello                    multicore-hello  software-interrupt
+clic-hardware-vector-interrupts   dhrystone     example-spi           local-interrupt          plic-interrupts  test-coreip
+clic-selective-vector-interrupts  empty         example-user-mode     local-vector-interrupts  return-fail      timer-interrupt
+clic-vector-interrupts            example-itim  example-user-syscall  lofive-boot              return-pass      uart-interrupt
+coremark                          example-pmp   example-watchdog      minimal-boot             sifive-welcome
+(venv) argus@argus-Inspiron-15-3567:~/freedom-e-sdk/software$ cd lo
+local-interrupt/         local-vector-interrupts/ lofive-boot/             
+(venv) argus@argus-Inspiron-15-3567:~/freedom-e-sdk/software$ cd lofive-boot/
+(venv) argus@argus-Inspiron-15-3567:~/freedom-e-sdk/software/lofive-boot$ ls
+LICENSE  LICENSE.Apache2  LICENSE.MIT  lofive-boot.c  Makefile  README.md
+(venv) argus@argus-Inspiron-15-3567:~/freedom-e-sdk/software/lofive-boot$ riscv64-unknown-elf-
+riscv64-unknown-elf-addr2line      riscv64-unknown-elf-gcc            riscv64-unknown-elf-gdb            riscv64-unknown-elf-objdump
+riscv64-unknown-elf-ar             riscv64-unknown-elf-gcc-14.2.0     riscv64-unknown-elf-gdb-add-index  riscv64-unknown-elf-ranlib
+riscv64-unknown-elf-as             riscv64-unknown-elf-gcc-ar         riscv64-unknown-elf-gprof          riscv64-unknown-elf-readelf
+riscv64-unknown-elf-c++            riscv64-unknown-elf-gcc-nm         riscv64-unknown-elf-ld             riscv64-unknown-elf-run
+riscv64-unknown-elf-c++filt        riscv64-unknown-elf-gcc-ranlib     riscv64-unknown-elf-ld.bfd         riscv64-unknown-elf-size
+riscv64-unknown-elf-cpp            riscv64-unknown-elf-gcov           riscv64-unknown-elf-lto-dump       riscv64-unknown-elf-strings
+riscv64-unknown-elf-elfedit        riscv64-unknown-elf-gcov-dump      riscv64-unknown-elf-nm             riscv64-unknown-elf-strip
+riscv64-unknown-elf-g++            riscv64-unknown-elf-gcov-tool      riscv64-unknown-elf-objcopy        
+(venv) argus@argus-Inspiron-15-3567:~/freedom-e-sdk/software/lofive-boot$ sudo make PROGRAM=~/freedom-e-sdk/software/lofive-boot TARGET=lofive-r1-bootloader upload
+make: *** No rule to make target 'upload'.  Stop.
+(venv) argus@argus-Inspiron-15-3567:~/freedom-e-sdk/software/lofive-boot$ cd ../..
+(venv) argus@argus-Inspiron-15-3567:~/freedom-e-sdk$ sudo make PROGRAM=~/freedom-e-sdk/software/lofive-boot TARGET=lofive-r1-bootloader uploadcd /home/argus/freedom-e-sdk/bsp/lofive-r1-bootloader/build/debug/ && \
+    CFLAGS="-march=rv32imac -mabi=ilp32 -mcmodel=medlow -ffunction-sections -fdata-sections -I/home/argus/freedom-e-sdk/bsp/lofive-r1-bootloader/install/include --specs=nano.specs -O0 -g" \
+    /home/argus/freedom-e-sdk/freedom-metal/configure \
+    --host=riscv64-unknown-elf \
+    --prefix=/home/argus/freedom-e-sdk/bsp/lofive-r1-bootloader/install \
+    --libdir=/home/argus/freedom-e-sdk/bsp/lofive-r1-bootloader/install/lib/debug \
+    --disable-maintainer-mode \
+    --with-preconfigured \
+    --with-machine-name=lofive-r1-bootloader \
+    --with-machine-header=/home/argus/freedom-e-sdk/bsp/lofive-r1-bootloader/metal.h \
+                --with-machine-inline=/home/argus/freedom-e-sdk/bsp/lofive-r1-bootloader/metal-inline.h \
+    --with-platform-header=/home/argus/freedom-e-sdk/bsp/lofive-r1-bootloader/metal-platform.h \
+    --with-machine-ldscript=/home/argus/freedom-e-sdk/bsp/lofive-r1-bootloader/metal.default.lds \
+    --with-builtin-libgloss
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+checking for riscv64-unknown-elf-strip... no
+checking for strip... strip
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking whether to enable maintainer-specific portions of Makefiles... no
+checking for riscv64-unknown-elf-gcc... no
+checking for gcc... gcc
+checking whether the C compiler works... no
+configure: error: in `/home/argus/freedom-e-sdk/bsp/lofive-r1-bootloader/build/debug':
+configure: error: C compiler cannot create executables
+See `config.log' for more details
+scripts/libmetal.mk:63: recipe for target '/home/argus/freedom-e-sdk/bsp/lofive-r1-bootloader/build/debug/Makefile' failed
+make: *** [/home/argus/freedom-e-sdk/bsp/lofive-r1-bootloader/build/debug/Makefile] Error 77
+(venv) argus@argus-Inspiron-15-3567:~/freedom-e-sdk$ ls
+bsp       freedom-devicetree-tools  LICENSE          Makefile           README.md            riscv-openocd  wit-manifest.json
+debug.mk  freedom-metal             LICENSE.Apache2  qemu-4.1.0         release.mk           scripts
+doc       jimtcl                    LICENSE.MIT      qemu-4.1.0.tar.xz  riscv-gnu-toolchain  software
+(venv) argus@argus-Inspiron-15-3567:~/freedom-e-sdk$ cd bsp/
+(venv) argus@argus-Inspiron-15-3567:~/freedom-e-sdk/bsp$ ls
+freedom-e310-arty  lofive-r1-bootloader  qemu-sifive-s51  qemu-sifive-u54mc  sifive-hifive1-revb      update-targets.sh
+lofive-r1          qemu-sifive-e31       qemu-sifive-u54  sifive-hifive1     sifive-hifive-unleashed
+
